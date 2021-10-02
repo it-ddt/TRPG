@@ -1,6 +1,10 @@
 import os
 import random
 
+user_name = "Вася"
+user_money = 5000
+
+
 def show_location_home():
     # описываем место
     os.system("cls")
@@ -47,17 +51,25 @@ def show_location_casino():
 
 
 def show_gamble():
+    global user_money
+    casino_bet = 50
+    print("Сейчас у вас", user_money, "денег")
     user_dice = random.randint(2, 12)
     casino_dice = random.randint(2, 12)
     print(f"Вы бросили кости, выпало {user_dice}")
     print(f"Казино кости, выпало {casino_dice}")
     if user_dice > casino_dice:
         print("Вы победили")
+        user_money += casino_bet
     elif user_dice < casino_dice:
         print("Вы проиграли")
+        user_money -= casino_bet
     else:
         print("Ничья")
+    print("Теперь у вас", user_money, "денег")
     input("Нажмите ENTER чтобы вернуться в казино")
     show_location_casino()
 
+
+# игра началась здесь
 show_location_home()
