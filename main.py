@@ -1,5 +1,6 @@
 import os  # для очистки экрана
 import dice  # для игры в кости
+import shop  # для покупки зелий
 
 
 def show_location_home(user_money: int):
@@ -24,7 +25,8 @@ def show_location_home(user_money: int):
     print("Ты дома.")
     print("1 - ничего не делать")
     print("2 - сыграть в кости с разбойниками")
-    print("3 - выйти из игры")
+    print("3 - пойти в магазин зелий")
+    print("4 - выйти из игры")
 
     # Выбираем вариант, пока он не будет одним из возможных.
     user_choice = "0"
@@ -37,6 +39,8 @@ def show_location_home(user_money: int):
     elif user_choice == "2":
         user_money = dice.play_dice(user_money)
     elif user_choice == "3":
+        shop.show_location_shop(user_money, user_inventory)
+    elif user_choice == "4":
         print("Выходим из игры")
     else:
         print("Что-то пошло не так")
@@ -51,6 +55,7 @@ user_name = "Вася Питонов"
 user_money = 5000
 user_luck = 30
 user_hp = 100
+user_inventory = ["меч", "щит"]
 game = True
 
 # начинаем играть
