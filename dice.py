@@ -2,7 +2,7 @@ import os
 import random
 
 
-def play_dice(money: int) -> int:
+def play_dice(name: str, money: int) -> int:
     """
         Принимает деньги пользователя.
         Возвращает измененные деньгим пользователя 
@@ -17,10 +17,9 @@ def play_dice(money: int) -> int:
     # Очищаем экран, печатаем деньги пользователя
     # и описываем возможные варианты.
     os.system("cls")
-    print(f"У тебя {money}")
+    print(f"{name} сел играть в кости с разбойниками, у него {money} денег")
     print("1 - сделать ставку")
     print("2 - уйти домой")
-
 
     # Выбираем вариант, пока он не будет одним из возможных.
     user_choise = "0"
@@ -35,11 +34,11 @@ def play_dice(money: int) -> int:
         if bet > money:  # Ставим не больше, чем есть у игрока.
             print("У тебя столько нет!")
             input("Нажми ENTER для продолжения")
-            play_dice(money)
+            play_dice(name, money)
         elif bet <= 0:  # Нельзя поставить 0 и меньше.
             print("Ставки от 1!")
             input("Нажми ENTER для продолжения")
-            play_dice(money)
+            play_dice(name, money)
         else:
             user_dice = random.randint(2, 12)
             computer_dice = random.randint(2, 12)
@@ -55,11 +54,11 @@ def play_dice(money: int) -> int:
             else:
                 print("Ты проиграл!")
                 money -= bet
-            print("У тебя", user_money)
+            print("У тебя", money)
             input("Нажми ENTER для продолжения")
-            play_dice(money)
+            play_dice(name, money)
     else:
-        print("Ты пошел домой")
+        print(f"{name} пошел домой")
         input("Нажми ENTER для продолжения")
 
     return money
