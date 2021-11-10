@@ -1,77 +1,66 @@
 import os  # для очистки экрана
-import dice  # для игры в кости
-import shop  # для покупки зелий
-
-
-def show_location_home(user_name: str, user_money: int, user_inventory: list):
-    """
-        Принимает деньги пользователя.
-        Очищает экран и печатает варианты действий.
-        Дает выбирать из этих действий.
-        Игра завершается, если переменная game тановится False.
-        
-        TODO:
-            Передать сюда все параметры пользователя.
-            Печатать параметры пользователя.
-            Пробросить user_luck в игру в кости.
-            Использовать user_name место Ты/Вы.
-            Использовать переменную game для выхода из игры.
-
-            Подключить модули Арены и Магазина.
-    """
-
-    # Очищаем экран и описываем возможные варианты.
-    os.system("cls")
-    print(f"имя: {user_name}")
-    print(f"деньги: {user_money}")
-    print(f"удача: {user_luck}")
-    print(f"здоровье: {user_hp}")
-    print("инвентарь:")
-    for i in user_inventory:
-            print(i)
-    print()
-    print(f"{user_name} дома. Что ему делать?")
-    print("1 - ничего не делать")
-    print("2 - сыграть в кости с разбойниками")
-    print("3 - пойти в магазин зелий")
-    print("4 - выйти из игры")
-
-    # Выбираем вариант, пока он не будет одним из возможных.
-    user_choice = "0"
-    while user_choice not in ("1", "2", "3", "4"):
-        user_choice = input("Что делать? ")
-
-    # Действуем по выбранному пользователем варианту.
-    if user_choice == "1":
-        print(f"{user_name} пялился в стену и вкоре задремал")
-        input("Нажми ENTER для продолжения")
-        show_location_home(user_name, user_money, user_inventory)
-    elif user_choice == "2":
-        user_money = dice.play_dice(user_name, user_money)
-        show_location_home(user_name, user_money, user_inventory)
-    elif user_choice == "3":
-        print(f"{user_money} до вызова лавки")
-        user_hero = shop.show_location_shop(user_name, user_money, user_inventory)
-        user_money = user_hero[0]
-        user_inventory = user_hero[1]
-        show_location_home(user_name, user_money, user_inventory)
-    elif user_choice == "4":
-        print("Выходим из игры")
-    else:
-        print("Что-то пошло не так")
-
-    # Чтобы экран не очистился раньше, чем пользователь увидит
-    # результат своих действий.
-    input("Нажми ENTER для продолжения")
-
+import shop  # модуль продавца зелий
+import gamble  # модуль игры в кости
+import arena  # модуль битвы на арене
+import adventure  # модуль поиска приключений
 
 # создаем персонажа
+# TODO: сделать персонажа словарем
 user_name = "Вася Питонов"
 user_money = 5000
-user_luck = 30
 user_hp = 100
-user_inventory = ["меч", "щит"]
-game = True
+user_luck = 1
+user_inventory = []
 
-# начинаем играть
-show_location_home(user_name, user_money, user_inventory)
+# главный цикл игры
+# заканчивается с гибелью игрока или выходоми из игры
+game = True
+while game:
+    # цикл выбора варианта действий
+    # заканчивается выбором из предложенных вариантов
+    user_choise = "0"
+    while user_choise not in ("1", "2", "3", "4", "5"):
+        os.system("cls")
+        print(f"имя: {user_name}")
+        print(f"деньги: {user_money}")
+        print(f"жизни: {user_hp}")
+        print(f"удача: {user_luck}")
+        print(f"инвентарь:")
+        for item in user_inventory:
+            print("•", item)
+        print("----------")
+        print(f"{user_name} сидит у костра в лагере. Отсюда можно отправиться в разные места.")
+        print("1 — Зайти в лавку к алхимику")
+        print("2 — Сыграть с разбойниками в кости")
+        print("3 — Побродить по окрестностям")
+        print("4 — Сразиться на арене")
+        print("5 — Выйти из игры")
+        user_choise = input("Что делать? ")
+
+    # проверки результата выбора
+
+    # идем за зельями
+    if user_choise == "1":
+        result = shop.show_location(user_name, user_money, user_inventory)
+        user_money = result[0]
+        user_inventory = result[1]
+
+    # играем в кости
+    elif user_choise == "2":
+        result = gamble.show_location(user_name, user_money, user_luck)
+        user_money = result
+    
+    # ищем приключения
+    elif user_choise == "3":
+        adventure.show_location(user_name)
+
+    # сражаемся на арене
+    elif user_choise == "4":
+        arena.show_location(user_name)
+
+    # выходим из игры        
+    else:
+        print(f"{user_name} закончил игру")
+        game = False
+
+    input("ENTER — дальше")
