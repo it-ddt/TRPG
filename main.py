@@ -1,3 +1,11 @@
+"""
+TODO:
+сделать персонажа словарем
+вынести функцию показа персонажа в отдельный модуль
+вынести функцию выбора вариантов в отдельный модуль
+придумать систему диалогов
+"""
+
 import os  # для очистки экрана
 import shop  # модуль продавца зелий
 import gamble  # модуль игры в кости
@@ -5,7 +13,6 @@ import arena  # модуль битвы на арене
 import adventure  # модуль поиска приключений
 
 # создаем персонажа
-# TODO: сделать персонажа словарем
 user_name = "Вася Питонов"
 user_money = 5000
 user_hp = 100
@@ -42,8 +49,7 @@ while game:
     # идем за зельями
     if user_choise == "1":
         result = shop.show_location(user_name, user_money, user_inventory)
-        user_money = result[0]
-        user_inventory = result[1]
+        user_money = result
 
     # играем в кости
     elif user_choise == "2":

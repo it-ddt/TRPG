@@ -42,4 +42,5 @@ def show_location(user_name, user_money, user_inventory):
             is_in_shop = False
             print(f"{user_name} отправился в лагерь.")
 
-    return [user_money, user_inventory]
+    # мы не возвращаем инвентарь, он изменяемый объект и изменяется прямо в этом модуле
+    return user_money
