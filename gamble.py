@@ -1,32 +1,27 @@
 import os
 import random
+import show_player
 
-def show_location(user_name, user_money, user_luck):
+
+def show_location(user_name, user_money, user_hp, user_luck, user_inventory, game):
     # TODO: удача игрока как-то должна влтиять на вероятность выигрыша, проигрыша
     # чем больше удача, тем больше минимальное число на костях, но не больше 12 
-    is_gambling = True
 
     # главный цикл модуля
     # заканчивается, если игрок выберет вернуться в лагерь
-    while is_gambling:
-        
-        9
-        user_choise = "0"
-        while user_choise not in ("1", "2"):
-            os.system("cls")
-            print(f"имя: {user_name}")
-            print(f"деньги: {user_money}")
-            print(f"удача: {user_luck}")
-            print("----------")
-            print(f"{user_name} зашел в логово разбойников и сел за игорный стол.")
-            print("1 — Сделать ставку")
-            print("2 — Вернуться в лагерь")
-            user_choise = input("Что делать? ")
+    is_busy = True
+    while is_busy:
+        os.system("cls")
+        show_player.show(user_name, user_money, user_hp, user_luck, user_inventory, game)
+        print(f"{user_name} зашел в логово разбойников и сел за игорный стол.")
+        print("1 — Сделать ставку")
+        print("2 — Вернуться в лагерь")
 
-        # проверяем выбор игрока
+        # игрок выбирает вариант
+        user_choice = input("Что делать? ")
 
         # делаем ставку и пытаемся на нее сыграть
-        if user_choise == "1":
+        if user_choice == "1":
             # TODO: сделать проверку ставки, она должна быть целым числом
             user_bet = int(input("Сколько поставить на кон? "))
             
@@ -45,8 +40,6 @@ def show_location(user_name, user_money, user_luck):
                 print(f"{user_name} выбросил {user_score}")
                 print(f"Разбойник выбросил {casino_score}")
 
-                # проверяем результат игры
-
                 # пользователь выиграл
                 if user_score > casino_score:
                     user_money += user_bet
@@ -61,11 +54,15 @@ def show_location(user_name, user_money, user_luck):
                 else:
                     print("Ничья!")
 
-            input("ENTER — дальше")
-
         # уходим в лагерь
-        else:
-            is_gambling = False
+        elif user_choice == "2":
+            is_busy = False
             print(f"{user_name} отправился в лагерь.")
+
+        # все остальные варианты
+        else:
+            print("Такого варианта нет, попробуйте другой.")
+
+        input("ENTER — дальше")
 
     return user_money
