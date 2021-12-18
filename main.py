@@ -12,6 +12,8 @@ import gamble  # модуль игры в кости
 import arena  # модуль битвы на арене
 import adventure  # модуль поиска приключений
 import show_player # модуль печатает все параметы игрока
+import save_load  # модуль сохранения и загрузки игры
+import os.path  # для проверки, есть ли файл
 
 # создаем персонажа
 user_name = "Вася Питонов"
@@ -33,7 +35,10 @@ while game:
     print("2 — Сыграть с разбойниками в кости")
     print("3 — Побродить по окрестностям")
     print("4 — Сразиться на арене")
-    print("5 — Выйти из игры")
+    print("5 — Сохранить игру")
+    if os.path.isfile("save"):
+        print("6 — Загрузить игру")
+    print("0 — Выйти из игры")
 
     # игрок выбирает вариант
     user_choice = input("Что делать? ")
@@ -56,8 +61,16 @@ while game:
     elif user_choice == "4":
         arena.show_location(user_name, user_money, user_hp, user_luck, user_inventory, game)
 
-    # вариант: выходим из игры
+    # сохраняем игру
     elif user_choice == "5":
+        save_load.save(user_name, user_money, user_hp, user_luck, user_inventory)
+    
+    # загрузить игру
+    elif user_choice == "6" and os.path.isfile("save"):
+        save_load.load()
+
+    # вариант: выходим из игры
+    elif user_choice == "0":
         game = False
 
     # все остальные варианты
